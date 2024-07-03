@@ -10,9 +10,9 @@ texts = texts.replace('\n\n\n\n\n\n\n\n\n\n\n\n', '\t\t')
 
 
 Perfect
-2, 1, 10, 7, 6, 5, 4, 3, 0, 9
+2, 1, 10, 7, 6, 5, 4, 3, 0, 9, 5
 Little broken
-5
+
 Broken
 8
 
