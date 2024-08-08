@@ -9,11 +9,11 @@ Principal\nAmount1\nValue\nCOLLATERALIZED LOAN OBLIGATIONS\u2009(Continued)\n$ \
 
 
 Perfect
-0, 1
+0, 1, 2
 Little broken
 
 Broken
-2, 3, 4
+ 3, 4
 
 1.     AMG Pantheon Fund  1609211
 2.     Ares Private Markets Fund  1876006
