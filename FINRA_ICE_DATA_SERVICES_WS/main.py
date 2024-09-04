@@ -3,7 +3,7 @@
 #   Miguel Ant. Linares S.   #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-from datetime import datetime
+from io import BytesIO
 import pandas as pd
 import requests
 import openpyxl
@@ -22,18 +22,18 @@ data = {
 }
 
 # Important routes
-dir = 'response.xlsx'
-result_dir = 'finra_ice_results.csv'
+# dir = 'C:/Users/mlinares/Documents/GitHub/Web-Scrapping/FINRA_ICE_DATA_SERVICES_WS/response.xlsx'
+result_dir = 'C:/Users/mlinares/Documents/GitHub/Web-Scrapping/FINRA_ICE_DATA_SERVICES_WS/finra_ice_results.csv'
 url = 'https://cdn.finra.org/trace/FINRA_IDS_STAR.xlsx'
 
 # Download Files from webpage
 r = requests.get(url)
-if r.status_code == 200:
-    with open(dir, 'wb') as file:
-        file.write(r.content)
+# if r.status_code == 200:
+#     with open(dir, 'wb') as file:
+#         file.write(r.content)
 
 # Open Excel that we downloaded and select the sheet
-wb = openpyxl.load_workbook(dir)
+wb = openpyxl.load_workbook(BytesIO(r.content))
 ws = wb['TradingActivity']
 
 # Extract the date out of the document
@@ -103,10 +103,11 @@ df = pd.DataFrame(data)
 # Check if another file is saved already
 if os.path.isfile(result_dir):
     df_old = pd.read_csv(result_dir)
-    asof_old = df_old['asof'][0]
+    asof_old = df_old.iloc[-1:, 0].values
+    asof_old = asof_old[0]
     
     #Prevent data duplication by cheching that the asof date is different
-    if asof != asof_old:
+    if str(asof) != str(asof_old):
         df = pd.concat([df_old, df], ignore_index=True)
         df.to_csv(result_dir, index=False)
         print('Done...')
@@ -115,3 +116,6 @@ if os.path.isfile(result_dir):
 else:
     df.to_csv(result_dir, index=False)
     print('Done...')
+
+
+# input()
